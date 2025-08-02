@@ -5,7 +5,7 @@ import {
   editAppointment,
 } from "../features/appointments/appointmentSlice";
 import { useState, useEffect } from "react";
-export function Form({ editData, setEditData }) {
+export default function Form({ editData, setEditData }) {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
@@ -25,5 +25,25 @@ export function Form({ editData, setEditData }) {
     } else {
       dispatch(addAppointment({ name, date }));
     }
+    setName("");
+    setDate("");
   };
+  return (
+    <form onSubmit={handleSubmit}>
+      <h3>{editData ? "Edit Appointment" : "Add Appointment"}</h3>
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        type="date"
+        placeholder="Date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      />
+      <button type="submit">{editData ? "Update" : "Add"}</button>
+    </form>
+  );
 }
